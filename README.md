@@ -3,12 +3,10 @@
 A small, self-contained **Configuration-as-Code** demo for Ansible Automation
 Platform (AAP) that answers a real customer question:
 
-> "
 >  - There's a workflow that disables a policy.
 >  - User wants it to pause for a human to approve that action.
 >  - The approver should be notified by email and be able to approve without logging into the AAP web UI ("the portal").
 >  - User is guessing that a survey might be the mechanism to collect that approve/deny decision mid-run.
-"
 
 ## TL;DR — what the customer actually needs
 
