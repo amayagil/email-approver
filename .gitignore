@@ -5,3 +5,4 @@ vars_secrets.yml
 # Installed collections and logs
 collections/
 *.log
+.vault_pass

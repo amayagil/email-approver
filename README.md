@@ -145,6 +145,14 @@ committed.
      -e @vars.yml -e @vars_secrets.yml
    ```
 
+   If you encrypted `vars_secrets.yml` with `ansible-vault` (recommended), add a
+   vault password source, e.g. `--ask-vault-pass` (prompt) or
+   `--vault-password-file .vault_pass` (a gitignored file). Encrypt with:
+
+   ```bash
+   ansible-vault encrypt vars_secrets.yml
+   ```
+
 4. **Try it**
    1. In the AAP UI, launch **Disable Policy with Email Approval**.
    2. Answer the survey (`Policy to disable`).
