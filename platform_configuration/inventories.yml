@@ -1,0 +1,15 @@
+---
+# Minimal inventory so the "Disable Policy" job template has a target.
+# hello_world.yml runs against localhost, so a single implicit-localhost
+# inventory is enough for the demo.
+controller_inventories:
+  - name: Email Approver - Inventory
+    organization: Amaya
+    description: Inventory for the email-approver demo
+
+controller_hosts:
+  - name: localhost
+    inventory: Email Approver - Inventory
+    variables:
+      ansible_connection: local
+      ansible_python_interpreter: "{{ '{{ ansible_playbook_python }}' }}"

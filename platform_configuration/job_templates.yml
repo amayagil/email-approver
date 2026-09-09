@@ -1,0 +1,12 @@
+---
+# The job template gated by the approval node. In the real world this is the
+# playbook that disables the policy. ask_variables_on_launch lets the workflow
+# survey answer (policy_name) flow through to this job.
+controller_templates:
+  - name: Disable Policy
+    description: Disables the requested policy (demo stand-in = hello_world.yml)
+    organization: Amaya
+    project: Email Approver - Demo Project
+    inventory: Email Approver - Inventory
+    playbook: hello_world.yml
+    ask_variables_on_launch: true

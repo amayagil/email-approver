@@ -1,0 +1,13 @@
+---
+# Project that holds the playbook representing the "disable policy" action.
+# For the demo we reuse the public ansible-tower-samples repo (hello_world.yml)
+# as a stand-in. Point scm_url at the customer's real policy repo to make it
+# do the actual work.
+controller_projects:
+  - name: Email Approver - Demo Project
+    organization: Amaya
+    scm_type: git
+    scm_url: https://github.com/ansible/ansible-tower-samples.git
+    scm_branch: master
+    scm_update_on_launch: true
+    wait: true

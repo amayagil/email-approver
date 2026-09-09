@@ -1,0 +1,42 @@
+---
+# Removes everything the demo created, in dependency-safe order
+# (workflow -> job template -> project/inventory/notification).
+- name: Tear down email-approver demo
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  module_defaults:
+    group/ansible.controller.controller:
+      controller_host: "{{ aap_hostname }}"
+      controller_oauthtoken: "{{ aap_token }}"
+      validate_certs: "{{ aap_validate_certs | default(false) }}"
+  tasks:
+    - name: Remove workflow job template
+      ansible.controller.workflow_job_template:
+        name: Disable Policy with Email Approval
+        organization: Amaya
+        state: absent
+
+    - name: Remove job template
+      ansible.controller.job_template:
+        name: Disable Policy
+        organization: Amaya
+        state: absent
+
+    - name: Remove notification template
+      ansible.controller.notification_template:
+        name: Email Approver Notification
+        organization: Amaya
+        state: absent
+
+    - name: Remove project
+      ansible.controller.project:
+        name: Email Approver - Demo Project
+        organization: Amaya
+        state: absent
+
+    - name: Remove inventory
+      ansible.controller.inventory:
+        name: Email Approver - Inventory
+        organization: Amaya
+        state: absent

@@ -1,0 +1,25 @@
+---
+# Non-secret configuration for the email-approver demo.
+# Copy this file to vars.yml and fill in your values.
+# Secrets (aap_token, SMTP password) live in vars_secrets.yml.
+
+# --- AAP connection (infra.aap_configuration 4.4.0 uses aap_* vars) ---
+aap_hostname: aap.example.com
+aap_token: "{{ vault_aap_token }}"
+aap_validate_certs: false
+
+# --- Email notification / approver ---
+# Any SMTP relay works. For a real mailbox in a lab, a free transactional
+# relay (e.g. Brevo/SendGrid) is convenient; a local catcher (smtp4dev,
+# MailHog) is fine if you only need to see the message, not deliver it.
+#   username = the relay-provided SMTP login (often NOT your account email)
+#   password (the SMTP key/token) lives in vars_secrets.yml
+#   sender   must be a verified sender on the relay
+smtp_host: smtp-relay.example.com
+smtp_port: 587
+smtp_use_tls: true
+smtp_use_ssl: false
+smtp_sender: sender@example.com
+smtp_username: smtp-login@example.com
+approver_recipients:
+  - approver@example.com

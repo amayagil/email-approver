@@ -1,0 +1,23 @@
+---
+# Email notification that alerts the approver. Attached to the workflow's
+# "approvals" trigger below, so the approver is emailed the moment the workflow
+# reaches the approval node (and again on approve / deny / timeout).
+#
+# SMTP settings come from vars.yml. The approver never has to open the AAP UI to
+# find out an approval is waiting; the email carries a direct link to the
+# pending approval (AAP builds it from TOWER_URL_BASE).
+controller_notifications:
+  - name: Email Approver Notification
+    description: Emails the policy approver when a disable request needs sign-off
+    organization: Amaya
+    notification_type: email
+    notification_configuration:
+      username: "{{ smtp_username | default('') }}"
+      password: "{{ smtp_password | default('') }}"
+      sender: "{{ smtp_sender }}"
+      recipients: "{{ approver_recipients }}"
+      host: "{{ smtp_host }}"
+      port: "{{ smtp_port | default(25) }}"
+      use_tls: "{{ smtp_use_tls | default(false) }}"
+      use_ssl: "{{ smtp_use_ssl | default(false) }}"
+      timeout: 30

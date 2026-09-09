@@ -1,0 +1,56 @@
+---
+# The heart of the demo: a workflow that pauses on an Approval node before it
+# runs the "Disable Policy" job.
+#
+# Answering the customer's actual question:
+#   * The APPROVAL NODE (type: workflow_approval) is the human sign-off gate.
+#   * notification_templates_approvals emails the approver when approval is
+#     pending / approved / denied / timed out -> "it sends an email".
+#   * The approver does NOT need the portal: they can approve/deny straight from
+#     the API (the email link points at the pending approval), e.g.
+#       POST /api/controller/v2/workflow_approvals/<id>/approve/
+#     so a mail/webhook integration can expose an approve button.
+#   * A SURVEY is launch-time input only (here: which policy to disable). It is
+#     NOT an approval mechanism and cannot be "refreshed" mid-run - the approval
+#     node is the correct tool for a mid-workflow human decision.
+controller_workflows:
+  - name: Disable Policy with Email Approval
+    description: Requests email approval, then disables the policy on approval
+    organization: Amaya
+    survey_enabled: true
+    survey_spec:
+      name: ''
+      description: ''
+      spec:
+        - question_name: Policy to disable
+          question_description: Name of the policy the requester wants disabled
+          variable: policy_name
+          type: text
+          required: true
+          default: ''
+    # Email the approver on approval events (pending / approved / denied / timeout)
+    notification_templates_approvals:
+      - Email Approver Notification
+    destroy_current_nodes: true
+    workflow_nodes:
+      # 1) Human approval gate - pauses the workflow, auto-denies after 1h
+      - identifier: approval-gate
+        unified_job_template:
+          name: Approve Policy Disable
+          description: Approve or deny disabling the requested policy
+          type: workflow_approval
+          timeout: 3600
+        related:
+          success_nodes:
+            - identifier: disable-policy
+          failure_nodes: []
+          always_nodes: []
+      # 2) Runs only if the approval is granted
+      - identifier: disable-policy
+        unified_job_template:
+          name: Disable Policy
+          type: job_template
+        related:
+          success_nodes: []
+          failure_nodes: []
+          always_nodes: []

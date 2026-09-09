@@ -1,0 +1,17 @@
+---
+# Applies the email-approver demo configuration to AAP as code.
+# Auth (aap_hostname / aap_token / aap_validate_certs) and SMTP settings are
+# loaded from vars.yml + vars_secrets.yml via -e @... (see README).
+- name: Configure AAP - email approver demo
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  pre_tasks:
+    - name: Load demo object definitions
+      ansible.builtin.include_vars:
+        dir: ./platform_configuration/
+        extensions: ["yml"]
+
+  roles:
+    - infra.aap_configuration.dispatch
