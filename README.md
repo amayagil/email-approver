@@ -8,14 +8,6 @@ Platform (AAP) that answers a real customer question:
 >  - The approver should be notified by email and be able to approve without logging into the AAP web UI ("the portal").
 >  - User is guessing that a survey might be the mechanism to collect that approve/deny decision mid-run.
 
-## TL;DR — what the customer actually needs
-
-| They said | What they need |
-|---|---|
-| "send an email to an approver" | An **email notification** on the workflow |
-| "approver doesn't want to use a portal" | The approver acts from the **email / the API**, not the AAP UI |
-| "refresh a survey as part of a workflow?" | Not a survey — a **workflow Approval node** |
-
 A **survey is the wrong tool** for the approval step. A survey only collects input
 *once, at launch time*; it cannot be "refreshed" or re-prompted in the middle of a
 run, and it is not a gate. The correct building block is a **workflow Approval
