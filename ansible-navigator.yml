@@ -9,7 +9,8 @@ ansible-navigator:
         - inventory
     # Extra args passed straight through to ansible-playbook inside the EE.
     # Paths are relative to this dir (navigator mounts it into the container).
-    cmdline: "-e @vars.yml -e @vars_secrets.yml --vault-password-file .vault_pass"
+    # Left commented on purpose: pass vars + vault on the CLI each run.
+    #cmdline: "-e @vars.yml -e @vars_secrets.yml --vault-password-file .vault_pass"
   execution-environment:
     image: quay.io/redhat_emp1/ee-ansible-ssa
     pull:
