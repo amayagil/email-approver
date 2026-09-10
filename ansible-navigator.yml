@@ -1,0 +1,25 @@
+ansible-navigator:
+  execution-environment:
+    image: quay.io/redhat_emp1/ee-ansible-ssa
+    pull:
+      policy: always
+    container-options:
+      - "--network=host"
+    environment-variables:
+      pass:
+        - CONTROLLER_HOST
+        - CONTROLLER_USERNAME
+        - CONTROLLER_PASSWORD
+        - CONTROLLER_VERIFY_SSL
+        - CONTROLLER_API_PATH
+        - PYTHONHTTPSVERIFY
+    #volume-mounts:
+    #  - src: "/home/amaya/.ansible/collections"
+    #    dest: "/home/runner/.ansible/collections" # No tocar esto, es la clave
+    #    options: "Z"
+  logging:
+    append: true
+    file: /tmp/navigator/ansible-navigator.log
+  playbook-artifact:
+    enable: false
+  mode: stdout
