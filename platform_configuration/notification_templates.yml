@@ -17,7 +17,11 @@ controller_notifications:
       sender: "{{ smtp_sender }}"
       recipients: "{{ approver_recipients }}"
       host: "{{ smtp_host }}"
-      port: "{{ smtp_port | default(25) }}"
-      use_tls: "{{ smtp_use_tls | default(false) }}"
-      use_ssl: "{{ smtp_use_ssl | default(false) }}"
+      # NOTE: a bare "{{ smtp_port }}" reference preserves the native int type;
+      # a "{{ ... | int }}" cast comes back as a string in this EE's ansible-core
+      # (2.19) and the controller API rejects it with "port incorrect type,
+      # expected int". So smtp_port MUST be defined as an int in vars.yml.
+      port: "{{ smtp_port }}"
+      use_tls: "{{ smtp_use_tls | default(false) | bool }}"
+      use_ssl: "{{ smtp_use_ssl | default(false) | bool }}"
       timeout: 30
