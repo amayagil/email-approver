@@ -14,7 +14,7 @@
 #     NOT an approval mechanism and cannot be "refreshed" mid-run - the approval
 #     node is the correct tool for a mid-workflow human decision.
 controller_workflows:
-  - name: Disable Policy with Email Approval
+  - name: "[WORKFLOW] Disable Policy with Email Approval"
     description: Requests email approval, then disables the policy on approval
     organization: Amaya
     survey_enabled: true
