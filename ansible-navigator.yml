@@ -1,8 +1,21 @@
 ansible-navigator:
+  # Defaults so you can just run `./run.sh` (or `ansible-navigator run`) with no
+  # extra flags. Positional/CLI args still override anything set here.
+  ansible:
+    playbook:
+      path: dispatch_config.yml
+    inventory:
+      entries:
+        - inventory
+    # Extra args passed straight through to ansible-playbook inside the EE.
+    # Paths are relative to this dir (navigator mounts it into the container).
+    cmdline: "-e @vars.yml -e @vars_secrets.yml --vault-password-file .vault_pass"
   execution-environment:
     image: quay.io/redhat_emp1/ee-ansible-ssa
     pull:
-      policy: always
+      # 'missing' = only pull if not already present locally (no re-pull each run).
+      # Change back to 'always' if you want to force the latest EE every time.
+      policy: missing
     container-options:
       - "--network=host"
     environment-variables:
